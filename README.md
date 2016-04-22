@@ -1,18 +1,17 @@
 # duka - Dukascopy data downloader
 
 Finding good Forex data is difficult or expensive. Dukascopy has made available an excellent [web tool](https://www.dukascopy.com/swiss/english/marketwatch/historical/) to download tick data for a large a variety of 
-Forex, CFD and commodities. This is awesome and extremely useful for people, like me, trying to study the forex market. 
-However, it takes a lot of time to download a large data set from the website because you can download only one day per time. In order to solve this issue, I created `duka`.  `duka` is a small terminal application which download ticks for a given date range from the Dukascopy historical repo and saves it in CSV.  `duka` takes advantage of python threads and coroutine in order to speed up the download. It takes roughly 10m to download tick data for  one year for a given instrument. No bad :) 
+Forex, CFD and commodities. This is awesome and extremely useful for people, like me, trying to study the Forex market. 
+However, it takes a lot of time to download a large data set from the website because you can download only one day per time. In order to solve this issue, I created `duka`.  
+`duka` is a small terminal application which download ticks for a given date range from the Dukascopy historical repo and saves it in CSV.  `duka` takes advantage of python threads and coroutine in order to speed up the download. It takes roughly 10m to download tick data for  one year for a given instrument. No bad :) 
 
-This is what `dukas` looks like:
+This is what `duka` looks like:
 
 ![duka](.img/Screen Shot 2016-04-10 at 20.15.51.png)
 
-As you can see, `duka` estimates the remaing time until the download is complete. This is extremelly useful when downloading a large data set. 
+As you can see, `duka` estimates the time left until the download is completed. This is extremely useful when downloading a large data set. 
 
-This is what the resulting folder may look like: 
-
-![Folder content](.img/Screen Shot 2016-04-10 at 20.25.15.png)
+`duka` supports tick download as well as candles with different time frame. For a full list check the usage section below.
 
 I hope you enjoy it!! 
 
@@ -26,6 +25,23 @@ pip install duka
 ```
 
 ## Usage
+    ```
+    usage: duka [options]
+
+    positional arguments:
+        SYMBOLS               symbol list using format EURUSD EURGBP 
+
+    optional arguments:
+          -h           show help message and exit
+          -d DAY       specific day format YYYY-MM-DD (default today)
+          -s STARTDATE start date format YYYY-MM-DD (default today)
+          -e ENDDATE   end date format YYYY-MM-DD (default today)
+          -t THREAD    number of threads (default 20)
+          -c CANDLE    use candles instead of ticks. Accepted values 1M 5M 10M 15M 30M 1H 4H 1D
+    ```
+
+## Examples
+
 
 - Help
 

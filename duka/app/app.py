@@ -4,7 +4,7 @@ import time
 from collections import deque
 from datetime import timedelta, date
 
-from ..core import dump, decompress, fetch_day, Logger
+from ..core import decompress, fetch_day, Logger, CSVDumper
 from ..core.utils import is_debug_mode
 
 SATURDAY = 5
@@ -51,7 +51,7 @@ def avg(fetch_times):
         return -1
 
 
-def app(symbols, start, end, threads):
+def app(symbols, start, end, threads, timeframe):
     if start > end:
         return
     lock = threading.Lock()
@@ -64,12 +64,12 @@ def app(symbols, start, end, threads):
     last_fetch = deque([], maxlen=5)
     update_progress(day_counter, total_days, -1, threads)
 
-    def do_work(symbol, day):
+    def do_work(symbol, day, csv_dumper):
         global day_counter
         star_time = time.time()
         Logger.info("Fetching day {0}".format(day))
         try:
-            dump(symbol, day, decompress(day, fetch_day(symbol, day)))
+            csv_dumper.dump(decompress(day, fetch_day(symbol, day)))
         except Exception as e:
             print("ERROR for {0}, {1} Exception : {2}".format(day, symbol, str(e)))
         elapsed_time = time.time() - star_time
@@ -81,8 +81,9 @@ def app(symbols, start, end, threads):
     futures = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
         for symbol in symbols:
-            for day in days(start, end):
-                futures.append(executor.submit(do_work, symbol, day))
+            with CSVDumper(symbol=symbol, timeframe=timeframe, file_name='test') as csv_dumper:
+                for day in days(start, end):
+                    futures.append(executor.submit(do_work, symbol, day, csv_dumper))
 
         for future in concurrent.futures.as_completed(futures):
             if future.exception() is None:
