@@ -1,6 +1,6 @@
 import unittest
 from datetime import date
-from ..app.app import days
+from duka.app.app import days
 
 
 class TestDateGenerator(unittest.TestCase):

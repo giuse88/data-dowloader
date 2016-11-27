@@ -38,21 +38,21 @@ class TestFindSunday(unittest.TestCase):
         self.assertEqual(end.month, 11)
 
     def test_is_dst(self):
-        day = datetime.datetime(2015, 4, 5)
+        day = datetime.date(2015, 4, 5)
         self.assertTrue(is_dst(day))
 
     def test_is_not_dst(self):
-        day = datetime.datetime(2015, 1, 1)
+        day = datetime.date(2015, 1, 1)
         self.assertFalse(is_dst(day))
 
     def test_day_change_is_dst(self):
-        day = datetime.datetime(2015, 3, 8)
+        day = datetime.date(2015, 3, 8)
         self.assertTrue(is_dst(day))
 
     def test_day_change_back_is_not_dst(self):
-        day = datetime.datetime(2015, 11, 1)
+        day = datetime.date(2015, 11, 1)
         self.assertFalse(is_dst(day))
 
     def test_is_dst(self):
-        day = datetime.datetime(2013, 11, 3)
+        day = datetime.date(2013, 11, 3)
         self.assertFalse(is_dst(day))

@@ -5,7 +5,7 @@ from os.path import join
 from .candle import Candle
 from .utils import TimeFrame, stringify, Logger
 
-TEMPLATE_FILE_NAME = "{}-{}_{:02d}_{:02d}-{}_{:02d}_{:02d}.csv"
+TEMPLATE_FILE_NAME = "{}-{}_{:02d}_{:02d}-{}_{:02d}_{:02d}-{}.csv"
 
 
 def format_float(number):
@@ -39,7 +39,7 @@ def write_candle(writer, candle):
 
 
 class CSVDumper:
-    def __init__(self, symbol, timeframe, start, end, folder, header=False):
+    def __init__(self, symbol, timeframe, start, end, folder, header=False, local_time=False):
         self.symbol = symbol
         self.timeframe = timeframe
         self.start = start
@@ -47,6 +47,7 @@ class CSVDumper:
         self.folder = folder
         self.include_header = header
         self.buffer = {}
+        self.local_time = local_time
 
     def get_header(self):
         if self.timeframe == TimeFrame.TICK:
@@ -75,10 +76,16 @@ class CSVDumper:
         if self.timeframe != TimeFrame.TICK:
             self.buffer[day].append(Candle(self.symbol, previous_key, self.timeframe, current_ticks))
 
+    def get_timezone(self):
+        if self.local_time:
+            return "local_time"
+        else:
+            return "GMT"
+
     def dump(self):
         file_name = TEMPLATE_FILE_NAME.format(self.symbol,
                                               self.start.year, self.start.month, self.start.day,
-                                              self.end.year, self.end.month, self.end.day)
+                                              self.end.year, self.end.month, self.end.day, self.get_timezone())
 
         Logger.info("Writing {0}".format(file_name))
 

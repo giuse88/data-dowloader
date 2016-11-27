@@ -1,5 +1,6 @@
 import struct
 from datetime import timedelta, datetime
+from dateutil import tz
 from lzma import LZMADecompressor, LZMAError, FORMAT_AUTO
 from .utils import is_dst
 
@@ -57,16 +58,17 @@ def add_hour(ticks):
     return ticks
 
 
-def normalize(day, ticks):
+def normalize(day, local_time, ticks):
     def norm(time, ask, bid, volume_ask, volume_bid):
         date = datetime(day.year, day.month, day.day) + timedelta(milliseconds=time)
-        # date.replace(tzinfo=datetime.tzinfo("UTC"))
+        if local_time:
+            date.replace(tzinfo=tz.tzlocal())
         return date, ask / 100000, bid / 100000, round(volume_ask * 1000000), round(volume_bid * 1000000)
 
     return add_hour(list(map(lambda x: norm(*x), ticks)))
 
 
-def decompress(day, compressed_buffer):
+def decompress(day, local_time, compressed_buffer):
     if compressed_buffer.nbytes == 0:
         return compressed_buffer
-    return normalize(day, tokenize(decompress_lzma(compressed_buffer)))
+    return normalize(day, local_time, tokenize(decompress_lzma(compressed_buffer)))

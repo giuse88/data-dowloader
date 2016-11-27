@@ -40,12 +40,15 @@ pip install duka
 
  optional arguments:
      -h           show help message and exit 
+     -v           show program's version number and exit
      -d DAY       specific day format YYYY-MM-DD (default today)
      -s STARTDATE start date format YYYY-MM-DD (default today)
      -e ENDDATE   end date format YYYY-MM-DD (default today)
-     -c CANDLE    use candles instead of ticks. Accepted values 1M 5M 10M 15M 30M 1H 4H 1D
+     -c CANDLE    use candles instead of ticks. Accepted values M1 M2 M5 M10 M15 M30 H1 H4 D1
      -f FOLDER    the dowloaded data will be saved in FOLDER (default '.')
      -t THREAD    number of threads (default 10)
+     --header     include CSV header (default false)
+     --local-time use local time (default GMT)
 ```
 
 ## Examples
