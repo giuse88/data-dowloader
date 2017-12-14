@@ -9,7 +9,7 @@ import requests
 
 from ..core.utils import Logger, is_dst
 
-URL = "https://www.dukascopy.com/datafeed/{currency}/{year}/{month:02d}/{day:02d}/{hour:02d}h_ticks.bi5"
+URL = "https://datafeed.dukascopy.com/datafeed/{currency}/{year}/{month:02d}/{day:02d}/{hour:02d}h_ticks.bi5"
 ATTEMPTS = 5
 
 
