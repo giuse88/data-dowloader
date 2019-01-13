@@ -64,6 +64,8 @@ def normalize(symbol, day, ticks):
         point = 100000
         if symbol.lower() in ['usdrub', 'xagusd', 'xauusd']:
             point = 1000
+        elif 'sesek' in symbol.lower():
+            point = 1000
         return date, ask / point, bid / point, round(volume_ask * 1000000), round(volume_bid * 1000000)
 
     return add_hour(list(map(lambda x: norm(*x), ticks)))
