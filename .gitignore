@@ -64,3 +64,4 @@ atlassian-ide-plugin.xml
 .idea
 *.csv
 test_data/
+.mypy_cache

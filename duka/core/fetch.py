@@ -35,7 +35,7 @@ async def get(url):
             Logger.warn("Request {0} failed with exception : {1}".format(id, str(e)))
             time.sleep(0.5 * i)
 
-    raise Exception("Request failed for {0} after ATTEMPTS attempts".format(url))
+    raise Exception("Request failed for {0} after {1} attempts".format(url, str(ATTEMPTS)))
 
 
 def create_tasks(symbol, day):
