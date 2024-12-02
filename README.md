@@ -1,5 +1,8 @@
 # duka - Dukascopy data downloader [![Build Status](https://travis-ci.org/giuse88/duka.svg?branch=master)](https://travis-ci.org/giuse88/duka)
 
+*2024 Dec 2*
+The datafeed URL has changed, I have updated it.
+
 Finding good Forex data is difficult or expensive. Dukascopy has made available an excellent [web tool](https://www.dukascopy.com/swiss/english/marketwatch/historical/) to download tick data for a large a variety of 
 Forex, CFD and commodities. This is awesome and extremely useful for people, like me, trying to study the Forex market. 
 However, it takes a lot of time to download a large data set from the website because you can download only one day per time. In order to solve this issue, I created **duka**.  
